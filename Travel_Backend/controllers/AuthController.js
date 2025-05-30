@@ -33,6 +33,8 @@ export const Register = async (req, res) => {
       message: "Successfully Created",
     });
   } catch (error) {
+    console.log("error" , error);
+    
     res.status(500).json({
       success: false,
       message: "Failed To Create. Try Again",

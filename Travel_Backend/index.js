@@ -16,7 +16,7 @@ ConnectDb();
 const app = express();
 const port = process.env.PORT || 6500;
 const corsOption = {
-  origin: "http://localhost:5173",
+  origin: "http://localhost:5174",
   credentials: true,
   methods: ["POST", "GET", "DELETE"],
 };

@@ -15,7 +15,7 @@ const Router = express.Router();
 
 // post new tour
 
-Router.post("/", VerifyAdmin ,  CreateTour);
+Router.post("/" ,  CreateTour);
 
 // put new   tour
 

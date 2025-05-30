@@ -74,7 +74,7 @@ export const getAllTour = async (req, res) => {
   const skip = (page - 1) * limit;
 
   try {
-    const tour = await Tour.find().populate('reviews').skip(skip).limit(limit);
+    const tour = await Tour.find().populate("reviews").skip(skip).limit(limit);
     const total = await Tour.countDocuments();
 
     res.status(200).json({
@@ -86,7 +86,10 @@ export const getAllTour = async (req, res) => {
       totalPages: Math.ceil(total / limit),
       data: tour,
     });
+
+    
   } catch (error) {
+    console.error("Error fetching tours:", error.message);
     res.status(404).json({
       success: false,
       message: "Tours not found",
@@ -96,19 +99,20 @@ export const getAllTour = async (req, res) => {
 
 // getsinglTour
 
-
 export const getSingleTour = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const tour = await Tour.findById(id).populate('reviews'); // Important!
+    const tour = await Tour.findById(id).populate("reviews"); // Important!
     if (!tour) {
-      return res.status(404).json({ success: false, message: 'Tour not found' });
+      return res
+        .status(404)
+        .json({ success: false, message: "Tour not found" });
     }
 
     res.status(200).json({ success: true, data: tour });
   } catch (err) {
-    res.status(500).json({ success: false, message: 'Failed to fetch tour' });
+    res.status(500).json({ success: false, message: "Failed to fetch tour" });
   }
 };
 
@@ -118,13 +122,13 @@ export const getTourBySeaarch = async (req, res) => {
   const city = new RegExp(req.query.city, "i");
   const distance = parseInt(req.query.distance);
   const maxGroupSize = parseInt(req.query.maxGroupSize);
-  
+
   try {
     const tours = await Tour.find({
       city,
       distance: { $gte: distance },
       maxGroupSize: { $gte: maxGroupSize },
-    }).populate('reviews');
+    }).populate("reviews");
     res.status(200).json({
       success: true,
       message: "Successfully",
@@ -137,12 +141,12 @@ export const getTourBySeaarch = async (req, res) => {
     });
   }
 };
-  
+
 // get feature tour
 
 export const getFeaturedTour = async (req, res) => {
   try {
-    const tours = await Tour.find({ featured: true }).populate('reviews');
+    const tours = await Tour.find({ featured: true }).populate("reviews");
     res.status(200).json({
       success: true,
       message: "Successfully",
